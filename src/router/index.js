@@ -8,8 +8,9 @@ import Index from '@/components/content/Index'
 import LoginNew from '@/components/content/LoginNew'
 import Home from '@/components/Home'
 import SearchShow from '@/components/content/SearchShow'
-import Cart from '@/components/content/Cart'
+
 import Cartt from '@/components/content/Carttwo'
+import Wishbg from '@/components/content/Wishbg'
 Vue.use(Router)
 
 export default new Router({
@@ -45,14 +46,14 @@ export default new Router({
       component: SearchShow
     },
     {
-      path:'/cart',
-      name:'Cart',
-      component: Cart
-    },
-    {
       path:'/cartt',
       name:'Cartt',
       component:Cartt
+    },
+    {
+      path:'/wishbg',
+      name:'Wighbg',
+      component:Wishbg
     }
 
   ]

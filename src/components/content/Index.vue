@@ -58,6 +58,7 @@ s<template>
                     <div class="product-content">
                         <h3 class="title">{{item.name}}</h3>
                         <div class="price">$ {{item.price}}</div>
+                        <div>remain {{item.number}}</div>
                     </div>
                 </div>
             </div>
@@ -88,6 +89,7 @@ s<template>
                           <p v-if="product.shop.name" style="font-size:18px;">
                               <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
                               <Button type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
+                              <!--商铺关注-->
                           </p>
                           <Divider />
                           <p v-if="product.info"><Icon type="md-attach" size="18" /> {{product.info}}</p>
@@ -99,7 +101,7 @@ s<template>
               <div slot="footer">
                   <Row style="text-align:center;">
                       <Col span="12">
-                          <Button style="width:80%;" type="success" size="large" long :loading="modal_loading">
+                          <Button @click="addToFavorite()" style="width:80%;" type="success" size="large" long :loading="modal_loading">
                               <Icon type="md-heart" /> Add To WishList
                           </Button>
                       </Col>
@@ -197,13 +199,44 @@ export default {
             this.list(this.pageNum, this.pageSize)
     },
     addToCart() {
-        this.axios.post('/customer/cart/add', {productid:this.product.id, number:1})
+        this.axios.post('/customer/cart/add', {id:this.product.id, number:1})
         .then((response) => {this.$Notice.success({
             title: 'Successful', desc: 'Add one product in your cart'
         })})
         .catch((err) => {this.$Notice.error({
             title: 'Failed', desc: 'Please login this system'
         })})
+    },
+    /**添加商品关注 */
+    addToFavorite(){
+        console.log(this.product.id);
+        this.axios.post('/customer/favorite/add',{id:this.product.id,type:1})
+        .then((response)=>{
+            this.$Notice.success({
+                title:'Successful',desc:'Add product in your favorite'
+            })
+        }).catch((err)=>{
+            this.$Notice.error({
+                title:'Failed',desc:'add to favorite failed'
+            })
+        })
+        
+    },
+    /**添加店铺关注 */
+    addToFavoriteShop(){
+        console.log(this.product.shop.id);
+        this.axios.post('/customer/favorite/add',{id:this.product.shop.id,type:3})
+        .then((response)=>{
+            this.$Notice.success({
+                  title: 'Successful', desc: 'Add shop in your favorite'
+            })
+        })
+        .catch((err)=>{
+            this.$Notice.error({
+                title:'Failed',desc:'add to favorite failed'
+            })
+        })
+
     }
   }
 }

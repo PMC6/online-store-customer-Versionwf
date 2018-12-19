@@ -12,7 +12,7 @@
 							<th style="width:10%"></th>
 						</tr>
 					</thead>
-						<tbody>
+						<!-- <tbody>
 						<tr>
 							<td data-th="Product">
 								<div class="row">
@@ -33,32 +33,32 @@
 								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
-					</tbody>
-					<!-- <tbody v-for="item in cartlist">
+					</tbody> -->
+					<tbody v-for="item in cartlist">
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img :src="item.image" alt="..." width="80px" height="80px" class="img-responsive"/></div>
+									<div class="col-sm-2 hidden-xs"><img :src="item.product.image" alt="..." width="80px" height="80px" class="img-responsive"/></div>
 									<div class="col-sm-10">
 										<h4 class="nomargin">{{item.product.name}}</h4>
-										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+										<p>{{item.product.info}} </p>
 									</div>
 								</div>
 							</td>
 							<td data-th="Price">{{item.product.price}}</td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="1">
+								<input type="number" class="form-control text-center"  v-model="item.number">
 							</td>
-							<td data-th="Subtotal" class="text-center">1.99</td>
+							<td data-th="Subtotal" class="text-center">{{item.product.price*item.number}}</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>   
+								<button class="btn btn-info btn-sm" @click="updatecart(item.id,item.number)"><i class="fa fa-refresh"></i></button>   
 							
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+								<button class="btn btn-danger btn-sm" @click="deletecart(item.id)"><i class="fa fa-trash-o"></i></button>
 																
 							</td>
 						</tr>
 						
-					</tbody> -->
+					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
 							<td class="text-center"><strong>Total {{Total}}</strong></td>
@@ -118,20 +118,48 @@ export default {
 		list(){
 			this.axios.get('/customer/cart/list').then((response) => {
                      this.cartlist = response.data.data
-                    // for(var i=0; i<arr.length; i++) {
-                    //     var item = {
-                    //         name:arr[i].product.name,
-                    //         num:arr[i].number,
-                    //         price:arr[i].product.price,
-                    //         ischeck:false
-                    //     }
-                    //     this.data1.push(item)
-                    // }
+                    
                 }).catch((err) => {
                     console.error(err.response)
                 })
 
-		}
+		},
+		updatecart(proid,num){
+			console.log( proid +'------'+num);
+			this.axios.put('/customer/cart/update',{
+				id:proid,
+				number:num
+			})
+			.then((response)=>{
+				this.$Notice.success({
+            title: 'Successful', desc: 'update product number in your cart'
+			})
+			})
+			.catch((error)=>{
+				this.$Notice.error({
+            title: 'Failed', desc: 'update failed '
+        })
+			});
+
+
+		},
+		deletecart(proid){
+			console.log(proid);
+		
+			this.axios.delete('/customer/cart/delete', {params:{id: proid}})
+			.then((response)=>{
+				this.$Notice.success({
+            title: 'Successful', desc: 'delete from your cart'
+			})
+			})
+			.catch((error)=>{
+				this.$Notice.error({
+            title: 'Failed', desc: 'delete failed '
+        })
+			});
+			}
+
+		
 
 	},
 	computed: {
@@ -140,9 +168,9 @@ export default {
 		  },
 		  Total(){
 			  var totalnum=0;//总费用
-			  for(var i=0;i<this.fakedata.length;i++)
+			  for(var i=0;i<this.cartlist.length;i++)
 			  {
-				  totalnum+=this.fakedata[i].num*this.fakedata[i].price;
+				  totalnum+=this.cartlist[i].number*this.cartlist[i].product.price;
 			  }
 			  return totalnum;
 

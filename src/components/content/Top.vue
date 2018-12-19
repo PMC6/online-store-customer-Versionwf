@@ -72,11 +72,11 @@
           logout() {
             this.axios.get('/logout').then((response) => {
                 this.$store.dispatch('logout').then(() => {
-                  this.$router.replace('/login')
+                  this.$router.replace('/lognew')
                 })
             }).catch((err) => {
                 this.$store.dispatch('logout').then(() => {
-                  this.$router.replace('/login')
+                  this.$router.replace('/lognew')
                 })
             })
           },
