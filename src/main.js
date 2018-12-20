@@ -10,9 +10,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 axios.defaults.withCredentials=true
-axios.defaults.baseURL='http://176.122.152.6:8080/'
+axios.defaults.baseURL='http://39.98.165.19:8080/'
 // 176.122.152.6:8080    http://39.98.165.19:8080
 Vue.prototype.axios=axios;
+
 
 
 Vue.config.productionTip = false

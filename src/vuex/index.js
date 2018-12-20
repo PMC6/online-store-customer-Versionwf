@@ -18,6 +18,7 @@ const store = new Vuex.Store({
         },
         logout (state) {
             state.user = undefined
+           
         }
     },
     // 异步方法用actions

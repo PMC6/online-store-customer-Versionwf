@@ -1,10 +1,10 @@
 <template>
     <div class="wish">
-         <Tabs value="Product" id='tabs'>
-        <TabPane label="Favorite Products" name="Product" icon="ios-heart">标签一的内容
+         <Tabs value="Product" id='tabs' >
+        <TabPane label="Favorite Products" name="Product" icon="ios-heart">
             <FavorPro></FavorPro>
             </TabPane>
-        <TabPane label="Favorite Shops" name="Shop" icon="ios-heart">标签二的内容
+        <TabPane label="Favorite Shops" name="Shop" icon="ios-heart">
             <FavorShop></FavorShop>
         </TabPane>
       
@@ -12,6 +12,7 @@
 </div>
 </template>
 <script>
+
 import FavorProduct from './tab/FavorProduct'
 import FavorShop from './tab/FavorShop'
 /*---------------------------*\

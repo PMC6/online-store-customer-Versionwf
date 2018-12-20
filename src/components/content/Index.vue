@@ -88,7 +88,7 @@ s<template>
                           </p>
                           <p v-if="product.shop.name" style="font-size:18px;">
                               <Icon v-if="product.shop.name" type="ios-appstore" /> {{product.shop.name}}
-                              <Button type="success" shape="circle" size="small"><Icon type="ios-heart" /></Button>
+                              <Button type="success" @click="addToFavoriteShop()" shape="circle" size="small"><Icon type="ios-heart" /></Button>
                               <!--商铺关注-->
                           </p>
                           <Divider />
@@ -101,7 +101,7 @@ s<template>
               <div slot="footer">
                   <Row style="text-align:center;">
                       <Col span="12">
-                          <Button @click="addToFavorite()" style="width:80%;" type="success" size="large" long :loading="modal_loading">
+                          <Button @click="addToFavorite(product.id)" style="width:80%;" type="success" size="large" long :loading="modal_loading">
                               <Icon type="md-heart" /> Add To WishList
                           </Button>
                       </Col>
@@ -208,9 +208,10 @@ export default {
         })})
     },
     /**添加商品关注 */
-    addToFavorite(){
-        console.log(this.product.id);
-        this.axios.post('/customer/favorite/add',{id:this.product.id,type:1})
+    addToFavorite(pid){
+        // console.log(this.product.id);
+        console.log(pid);
+        this.axios.post('/customer/favorite/add',{'id':pid,'type':3})
         .then((response)=>{
             this.$Notice.success({
                 title:'Successful',desc:'Add product in your favorite'
@@ -224,8 +225,8 @@ export default {
     },
     /**添加店铺关注 */
     addToFavoriteShop(){
-        console.log(this.product.shop.id);
-        this.axios.post('/customer/favorite/add',{id:this.product.shop.id,type:3})
+        console.log('shopid'+this.product.shop.id);
+        this.axios.post('/customer/favorite/add',{id:this.product.shop.id,type:1})
         .then((response)=>{
             this.$Notice.success({
                   title: 'Successful', desc: 'Add shop in your favorite'
