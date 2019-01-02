@@ -14,19 +14,9 @@ import Header from './Header'
 import Content from './Content'
 
 export default {
-    data(){
-        return {
-            parentinfo:'I am father'
-        }
-    },
     components: {
         'Header': Header,
         'Content': Content
-    },
-    methods:{
-        search(){
-            console.log('parent search');
-        }
     }
 }
 </script>
@@ -38,8 +28,7 @@ export default {
   z-index: 2;
 }
 #layout {
- 
-  margin-top: 60px;
+  margin-top: 70px;
   z-index: 1;
   display: inline-block;
   min-height: 82vh;

@@ -1,24 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Login from '@/components/content/Login'
-import Register from '@/components/content/Register'
+import Product from '@/components/contents/Product'
+import Index from '@/components/contents/Index'
+import Login from '@/components/contents/Login'
+import Register from '@/components/contents/Register'
+import Home from '@/components/contents/Home'
+import Cart from '@/components/contents/Cart'
+import Picture from '@/components/contents/Picture'
+import CategoryHome from '@/components/contents/CategoryHome'
+import ShopPage from '@/components/contents/ShopPage'
 
-import Index from '@/components/content/Index'
-import LoginNew from '@/components/content/LoginNew'
-import Home from '@/components/Home'
-import SearchShow from '@/components/content/SearchShow'
-
-import Cartt from '@/components/content/Carttwo'
-import Wishbg from '@/components/content/Wishbg'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path:'/',
-      name:'Index',
+      path: '/',
+      name: 'Index',
       component: Index
+    },
+    {
+      path: '/product',
+      name: 'Product',
+      component: Product
     },
     {
       path: '/login',
@@ -26,35 +30,34 @@ export default new Router({
       component: Login
     },
     {
-      path:'/register',
-      name:'Register',
+      path: '/register',
+      name: 'Register',
       component: Register
     },
     {
-      path:'/lognew',
-      name:'LoginNew',
-      component:LoginNew
+        path: '/home',
+        name: 'Home',
+        component: Home
     },
     {
-      path:'/home',
-      name:'Home',
-      component:Home
+        path: '/cart',
+        name: 'Cart',
+        component: Cart
     },
     {
-      path:'/showsearch',
-      name:'showsearch',
-      component: SearchShow
+        path: '/picture',
+        name: 'Picture',
+        component: Picture
     },
     {
-      path:'/cartt',
-      name:'Cartt',
-      component:Cartt
+        path: '/categoryhome',
+        name: 'CategoryHome',
+        component: CategoryHome
     },
     {
-      path:'/wishbg',
-      name:'Wighbg',
-      component:Wishbg
+        path: '/shop',
+        name: 'ShopPage',
+        component: ShopPage
     }
-
   ]
 })
