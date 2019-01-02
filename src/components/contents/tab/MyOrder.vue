@@ -1,12 +1,12 @@
 <template>
     <div>
-                <!-- <div v-if="orderlist.length == 0" class="order-empty">
+                <div v-if="orderlist.length == 0" class="order-empty">
             <Icon size="100" type="ios-cart-outline" />
             <p>
                 Your order list is empty	Start <a href="#/">shopping now</a>!
                 And click the wish button to add product or shop in your wish list.
             </p>
-        </div> -->
+        </div>
         <div class="cart-record">
             <div class="list-group">
                 <a v-for="item in orderlist" :key="item.id" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -25,7 +25,9 @@
                           </div>
                            <div class="d-flex w-100 justify-content-between">
                               <p class="mb-1"><Tag type="border" color="warning">{{item.createTime}}</Tag></p>
-                              <button type="button" class="btn btn-warning btn-sm" @click="cancel(item)">cancel order</button>
+                                
+                              <button type="button"  class="btn btn-warning btn-sm" @click="cancel(item)">cancel order</button>
+                               
                           </div>
                       </div>
                   </div>
@@ -40,6 +42,8 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+import qs from 'qs'
 /** order status :processing order,preparing for shipment准备装运,shipped装运,complete */
     export default {
         data () {
@@ -88,17 +92,25 @@
             },
             cancel(data){
                 // 取消订单有问题
+                console.log('data id is '+data.id)
                 this.axios.delete('/customer/order/cancel',{
-                    params:{
-                        orderid:data.id
-                    }
+                   
+                        data:{"orderId":data.id}
+                    
                 }).then(response=>{
+                    console.log(response)
                      this.$Notice.success({
                     title: 'Successful', desc: 'cancel order successful'
                 });
                 }).catch(err=>{
                     console.log(err.response)
                 })
+
+            },
+            check(data){
+                if(data.status=='complete'||data.status=='cancel')
+                    return false;
+                return true;
 
             }
 

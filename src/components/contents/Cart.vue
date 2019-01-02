@@ -61,7 +61,7 @@
             <p>After you click ok, the dialog box will close in 2 seconds.</p>
             <div v-for="item in data1" v-if="item.checked" class="list-group-item list-group-item-action flex-column align-items-start">
                         
-                <InputNumber readonly size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
+                
                 <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
                                          <!-- <button @click="addorder(item.product.shop.name,item.product.name,item.product.number)">add order</button> -->
                 <div class="d-flex w-100 justify-content-between" >
@@ -74,6 +74,8 @@
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                  <Tag type="border" color="success">{{item.product.shop.name}}</Tag>
+                                 <InputNumber readonly size="small" :max="item.product.number" :min="1" v-model="item.number"></InputNumber>
+                                 <p style="color:#19be6b;">Total： ${{item.product.price*item.number}}</p>
                             </div>
                             <div class="d-flex w-100 " >
                                 <button type="button" class="btn btn-sm btnadd" @click="addorder(item)">add order</button>
@@ -128,11 +130,11 @@
                 // console.log(this.modalshow)
             },
             addorder(item){
-                console.log(shopname+'  '+productname+'  '+productnum)
+               
                 this.axios.post('/customer/order/add',{
                     "shopName":item.product.shop.name,
                     "productName":item.product.name,
-                    "number":item.product.number
+                    "number":item.number
                 }).then(response=>{
                     console.log(response);
                     this.$Notice.success({
