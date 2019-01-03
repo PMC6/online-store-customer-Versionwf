@@ -55,14 +55,17 @@
                         :loading="loading"
                         width="1000"
                         cancel-text="cancel"
+
+
                         ok-text="ok"
                        
                       >
             <p>After you click ok, the dialog box will close in 2 seconds.</p>
+             <Scroll>
             <div v-for="item in data1" v-if="item.checked" class="list-group-item list-group-item-action flex-column align-items-start">
                         
                 
-                <p style="color:#19be6b;">Total： ${{item.number * item.product.price}}</p>
+                
                                          <!-- <button @click="addorder(item.product.shop.name,item.product.name,item.product.number)">add order</button> -->
                 <div class="d-flex w-100 justify-content-between" >
                     <div style="width:12%;"><img style="height:100px;width:100%;" :src="item.product.image" object-fit="contain" /></div>
@@ -86,6 +89,7 @@
                     </div>
                            
                 </div>
+                </Scroll>
              <p class="total-price "><Tag type="dot">Total： ${{total}}</Tag></p>
                         
                          
@@ -130,7 +134,7 @@
                 // console.log(this.modalshow)
             },
             addorder(item){
-               
+               console.log(item);
                 this.axios.post('/customer/order/add',{
                     "shopName":item.product.shop.name,
                     "productName":item.product.name,
@@ -144,8 +148,7 @@
                 }).catch(error=>{
                     console.log(error)
                 })
-            //    this.remove(item);
-
+           
             }
         },
         computed: {
